@@ -2,6 +2,7 @@ const path = require('path');
 const express = require('express');
 const colors = require('colors');
 const dotenv = require('dotenv').config();
+const cors = require('cors'); // Add this line
 const { errorHandler } = require('./middleware/errorMiddleware');
 const connectDB = require('./config/db');
 const port = process.env.PORT || 5001;
@@ -9,6 +10,15 @@ const port = process.env.PORT || 5001;
 connectDB();
 
 const app = express();
+
+// Configure CORS options
+const corsOptions = {
+  origin: 'https://mern-tutorial-1.onrender.com', // Update this with your frontend URL
+  optionsSuccessStatus: 200
+};
+
+// Use CORS middleware
+app.use(cors(corsOptions));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
